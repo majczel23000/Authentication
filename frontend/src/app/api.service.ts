@@ -13,5 +13,12 @@ export class ApiService {
     .subscribe(res => {
       console.log(res);
     })
+  };
+
+  loginUser(user){
+    this.http.post('http://localhost:3000/login', user)
+    .subscribe(res => {
+      console.log(res);
+    })
   }
 }

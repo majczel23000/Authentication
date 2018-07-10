@@ -46,6 +46,23 @@ app.post('/register', (req, res) => {
     })
 });
 
+app.post('/login', (req, res) => {
+    let userData = req.body;
+    User.findOne({email: userData.email}, (error, user) => {
+        if(error){
+            console.log("There is an error with email.", error);
+        } else{
+           if(!user){
+               res.status(401).send("Invalid email");
+           } else if(bcrypt.compareSync(userData.password, user.password) == false){
+               res.status(401).send("Invalid password");
+           } else {
+               res.status(200).send(user);
+           }
+        }
+    });
+});
+
 app.listen(app.get('port'), function(err, response){
     console.log("Server is running on port:", app.get('port'));
 });

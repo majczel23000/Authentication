@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
 
   loginUser(user){
-    this.apiService.registerUser(user);
+    this.apiService.loginUser(user);
   }
 
 }
