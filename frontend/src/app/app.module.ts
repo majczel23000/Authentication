@@ -28,6 +28,11 @@ import { LoginComponent } from './login/login.component';
       {
         path: 'login',
         component: LoginComponent
+      },
+      {
+        path: '',
+        redirectTo: '/login',
+        pathMatch: 'full'
       }
     ])
   ],
