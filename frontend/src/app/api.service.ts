@@ -26,4 +26,17 @@ export class ApiService {
       this._router.navigate(['/dashboard']);
     })
   }
+
+  loggedIn(){
+    // !! - zwraca typ boolean (jest lub nie), a nie wartosc itemu token
+    if(localStorage.getItem('token') == null){
+      console.log("nei ma tokenu");
+      return false;
+    }
+    else{
+      console.log("jest token");
+      return true;
+    }
+
+  }
 }

@@ -9,6 +9,7 @@ import { RegisterComponent } from './register/register.component';
 import { ApiService } from './api.service';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -38,12 +39,14 @@ import { DashboardComponent } from './dashboard/dashboard.component';
       },
       {
         path: 'dashboard',
-        component: DashboardComponent
+        component: DashboardComponent,
+        canActivate: [AuthGuard]
       }
     ])
   ],
   providers: [
-    ApiService
+    ApiService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
