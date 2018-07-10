@@ -8,13 +8,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { RegisterComponent } from './register/register.component';
 import { ApiService } from './api.service';
 import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +35,10 @@ import { LoginComponent } from './login/login.component';
         path: '',
         redirectTo: '/login',
         pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent
       }
     ])
   ],
