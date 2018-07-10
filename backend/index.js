@@ -4,6 +4,7 @@ var bodyparser = require('body-parser');
 var User = require('./models/User');
 var cors = require('cors');
 var bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
 
 var app = express();
 
@@ -41,7 +42,9 @@ app.post('/register', (req, res) => {
                 console.log("There is an error in adding user in database");
                 res.send({success: "Failed to add user", status: 500});
             }
-            res.send({success: "Successfully addes new user", status: 200});
+            let payload = { subject: result._id};
+            let token = jwt.sign(payload, 'secretKey');
+            res.send({token});
         });
     })
 });
@@ -57,7 +60,9 @@ app.post('/login', (req, res) => {
            } else if(bcrypt.compareSync(userData.password, user.password) == false){
                res.status(401).send("Invalid password");
            } else {
-               res.status(200).send(user);
+               let payload = { subject: user._id};
+               let token = jwt.sign(payload, 'secretKey');
+               res.status(200).send({token});
            }
         }
     });

@@ -12,6 +12,7 @@ export class ApiService {
     this.http.post('http://localhost:3000/register', user)
     .subscribe(res => {
       console.log(res);
+      localStorage.setItem('token', res.token);
     })
   };
 
@@ -19,6 +20,7 @@ export class ApiService {
     this.http.post('http://localhost:3000/login', user)
     .subscribe(res => {
       console.log(res);
+      localStorage.setItem('token', res.token);
     })
   }
 }
