@@ -1,0 +1,12 @@
+
+<form id="formData" #userData="ngForm" (ngSubmit)="registerUser(userData.value)">
+    <input matInput placeholder="firstname" name="firstname" type="text" ngModel>
+  <br>
+    <input matInput placeholder="lastname" name="lastname" type="text" ngModel>
+  <br>
+    <input matInput placeholder="email" name="email" type="email" ngModel>
+  <br>
+    <input matInput placeholder="password" name="password" type="password" ngModel>
+  <br>
+  <input type="submit" value="Register" mat-Button>
+</form>
