@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-
 
   constructor(private http: HttpClient, private _router: Router) { }
 
@@ -28,16 +27,28 @@ export class ApiService {
     })
   }
 
+  dashboardAccess(){
+    return this.http.get<any>('http://localhost:3000/dashboard');
+  }
+
   loggedIn(){
     // !! - zwraca typ boolean (jest lub nie), a nie wartosc itemu token
-    if(localStorage.getItem('token') == null){
-      console.log("nei ma tokenu");
-      return false;
-    }
-    else{
-      console.log("jest token");
-      return true;
-    }
+    // if(localStorage.getItem('token') == null){
+    //   console.log("nei ma tokenu");
+    //   return false;
+    // }
+    // else{
+    //   console.log("jest token");
+    //   return true;
+    // }
+    return !!localStorage.getItem('token');
+  }
 
+  deleteToken500Error(){
+    localStorage.removeItem('token');
+  }
+
+  getToken(){
+    return localStorage.getItem('token');
   }
 }
