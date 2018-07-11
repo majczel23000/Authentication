@@ -81,6 +81,7 @@ export class ApiService {
   deleteToken500Error(){
     localStorage.removeItem('token');
     localStorage.removeItem('firstname');
+    localStorage.removeItem('lastname');
     console.log("[deleteToken500Error] Token was successfully removed");
   }
 
@@ -92,6 +93,7 @@ export class ApiService {
   logoutUser(){
     localStorage.removeItem('token');
     localStorage.removeItem('firstname');
+    localStorage.removeItem('lastname');
     this._router.navigate[('/login')];
   }
 
