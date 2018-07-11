@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
+import { InformationComponent } from './information/information.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TokenInterceptorService } from './token-interceptor.service';
     NavbarComponent,
     RegisterComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    InformationComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +44,10 @@ import { TokenInterceptorService } from './token-interceptor.service';
         path: 'dashboard',
         component: DashboardComponent,
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'information',
+        component: InformationComponent
       }
     ])
   ],

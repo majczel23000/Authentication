@@ -16,10 +16,11 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.apiService.dashboardAccess()
     .subscribe(
-      res => console.log("Access granted to dashboard"),
+      res => console.log("Access to dashboard"),
       err =>{
         if(err instanceof HttpErrorResponse){
-          if(err.status === 401){
+          if(err.status === 200){
+            console.log("Dashboard okej");
             this.router.navigate(['/login']);
           }
           if(err.status === 500){

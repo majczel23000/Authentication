@@ -10,14 +10,17 @@
       <li class="nav-item ">
         <a class="nav-link" *ngIf="apiService.loggedIn()" routerLink="/dashboard">Dashboard</a>
       </li>
-      <li class="nav-item ">
-          <a class="nav-link" *ngIf="!apiService.loggedIn()" routerLink="/register">Register</a>
+      <li class="nav-item mr-2">
+          <a class="nav-link bg-primary text-white" *ngIf="!apiService.loggedIn()" routerLink="/register">Register</a>
       </li>
-      <li class="nav-item ">
-        <a class="nav-link" *ngIf="!apiService.loggedIn()" routerLink="/login">Login</a>
+      <li class="nav-item mr-2">
+        <a class="nav-link bg-success text-white" *ngIf="!apiService.loggedIn()" routerLink="/login">Login</a>
       </li>
-      <li class="nav-item ">
-        <a class="nav-link" *ngIf="apiService.loggedIn()" routerLink="/login" (click)="apiService.logoutUser()">Logout</a>
+      <li class="nav-item mr-2">
+        <a class="nav-link bg-secondary text-white" *ngIf="apiService.loggedIn()" routerLink="/login" (click)="apiService.logoutUser()">Logout</a>
+      </li>
+      <li class="nav-item mr-2">
+        <a class="nav-link bg-info text-white" routerLink="/information">Information</a>
       </li>
     </ul>
   </div>

@@ -50,16 +50,26 @@ export class ApiService {
   loginUser(user){
     console.log("[loginUser]");
     this.http.post('http://localhost:3000/login', user)
-    .subscribe(res => {
-      console.log(res);
-      localStorage.setItem('token', res['token']);
-      localStorage.setItem('firstname', res['firstname']);
-      localStorage.setItem('lastname', res['lastname']);
-      console.log("Uzytkownik: ", res['firstname'], res['lastname']);
-      //this.firstname = res['firstname'];
-      this.insertFirstname(res['firstname']);
-      this.insertLastname(res['lastname']);
-      this._router.navigate(['/dashboard']);
+    .subscribe(
+      res => {
+        console.log(res);
+        localStorage.setItem('token', res['token']);
+        localStorage.setItem('firstname', res['firstname']);
+        localStorage.setItem('lastname', res['lastname']);
+        console.log("Uzytkownik: ", res['firstname'], res['lastname']);
+        //this.firstname = res['firstname'];
+        this.insertFirstname(res['firstname']);
+        this.insertLastname(res['lastname']);
+        this._router.navigate(['/dashboard']);
+      },
+      err=>{
+        if(err instanceof HttpErrorResponse){
+          if(err.status === 401){
+            alert("Nieprawidłowy email");
+          } else if(err.status === 402){
+            alert("Nieprawidłowe hasło");
+          }
+        }
     })
   }
 

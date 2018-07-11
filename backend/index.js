@@ -80,14 +80,14 @@ app.post('/register', (req, res) => {
 app.post('/login', (req, res) => {
     let userData = req.body;
     
-    User.findOne({email: userData.email}, (error, user) => {
+    User.findOne({emal: userData.email}, (error, user) => {
         if(error){
             console.log("There is an error with email.", error);
         } else{
            if(!user){
                res.status(401).send("Invalid email");
            } else if(bcrypt.compareSync(userData.password, user.password) == false){
-               res.status(401).send("Invalid password");
+               res.status(402).send("Invalid password");
            } else {
                let payload = { subject: user._id};
                let token = jwt.sign(payload, 'secretKey');
