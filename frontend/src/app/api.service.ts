@@ -10,6 +10,7 @@ export class ApiService {
   constructor(private http: HttpClient, private _router: Router) { }
 
   registerUser(user){
+    console.log("[registerUser]");
     this.http.post('http://localhost:3000/register', user)
     .subscribe(res => {
       console.log(res);
@@ -19,6 +20,7 @@ export class ApiService {
   };
 
   loginUser(user){
+    console.log("[loginUser]");
     this.http.post('http://localhost:3000/login', user)
     .subscribe(res => {
       console.log(res);
@@ -28,6 +30,7 @@ export class ApiService {
   }
 
   dashboardAccess(){
+    console.log("[dashboardAccess] returning http get method")
     return this.http.get<any>('http://localhost:3000/dashboard');
   }
 
@@ -41,14 +44,26 @@ export class ApiService {
     //   console.log("jest token");
     //   return true;
     // }
+    console.log("[loggedIn] Checking if there is token");
+    return !!localStorage.getItem('token');
+  }
+  loggeddIn(){
+    console.log("[LI loggedIn] Checking if there is token");
     return !!localStorage.getItem('token');
   }
 
   deleteToken500Error(){
     localStorage.removeItem('token');
+    console.log("[deleteToken500Error] Token was successfully removed");
   }
 
   getToken(){
+    console.log("[getToken] Getting token from local Storage");
     return localStorage.getItem('token');
+  }
+
+  logoutUser(){
+    localStorage.removeItem('token');
+    this._router.navigate[('/login')];
   }
 }

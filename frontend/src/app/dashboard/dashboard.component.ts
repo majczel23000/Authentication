@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.apiService.dashboardAccess()
     .subscribe(
-      res => console.log("Acccess to dashboard"),
+      res => console.log("Access granted to dashboard"),
       err =>{
         if(err instanceof HttpErrorResponse){
           if(err.status === 401){
@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
           }
           if(err.status === 500){
             this.apiService.deleteToken500Error();
+            this.router.navigate(['/login']);
           }
         }
       }
