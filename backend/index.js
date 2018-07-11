@@ -60,13 +60,14 @@ app.post('/register', (req, res) => {
             }
             let payload = { subject: result._id};
             let token = jwt.sign(payload, 'secretKey');
-            res.send({token});
+            res.send({token, firstname, lastname});
         });
     })
 });
 
 app.post('/login', (req, res) => {
     let userData = req.body;
+    
     User.findOne({email: userData.email}, (error, user) => {
         if(error){
             console.log("There is an error with email.", error);
@@ -78,7 +79,9 @@ app.post('/login', (req, res) => {
            } else {
                let payload = { subject: user._id};
                let token = jwt.sign(payload, 'secretKey');
-               res.status(200).send({token});
+               var firstname = user.firstname;
+               var lastname = user.lastname;
+               res.status(200).send({token, firstname, lastname});
            }
         }
     });

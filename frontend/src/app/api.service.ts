@@ -1,13 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Subject } from '../../node_modules/rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
+  private firstname = new Subject<string>();
+  firstnameString$ = this.firstname.asObservable();
+
+  private lastname = new Subject<string>();
+  lastnameString$ = this.lastname.asObservable();
+
   constructor(private http: HttpClient, private _router: Router) { }
+
+  insertFirstname(data: string) {
+    this.firstname.next(data);
+  }
+  insertLastname(data: string) {
+    this.lastname.next(data);
+  }
 
   registerUser(user){
     console.log("[registerUser]");
@@ -15,6 +29,12 @@ export class ApiService {
     .subscribe(res => {
       console.log(res);
       localStorage.setItem('token', res['token']);
+      localStorage.setItem('firstname', res['firstname']);
+      localStorage.setItem('lastname', res['lastname']);
+      console.log("Uzytkownik: ", res['firstname'], res['lastname']);
+      //this.firstname = res['firstname'];
+      this.insertFirstname(res['firstname']);
+      this.insertLastname(res['lastname']);
       this._router.navigate(['/dashboard']);
     })
   };
@@ -25,6 +45,12 @@ export class ApiService {
     .subscribe(res => {
       console.log(res);
       localStorage.setItem('token', res['token']);
+      localStorage.setItem('firstname', res['firstname']);
+      localStorage.setItem('lastname', res['lastname']);
+      console.log("Uzytkownik: ", res['firstname'], res['lastname']);
+      //this.firstname = res['firstname'];
+      this.insertFirstname(res['firstname']);
+      this.insertLastname(res['lastname']);
       this._router.navigate(['/dashboard']);
     })
   }
@@ -54,6 +80,7 @@ export class ApiService {
 
   deleteToken500Error(){
     localStorage.removeItem('token');
+    localStorage.removeItem('firstname');
     console.log("[deleteToken500Error] Token was successfully removed");
   }
 
@@ -64,6 +91,11 @@ export class ApiService {
 
   logoutUser(){
     localStorage.removeItem('token');
+    localStorage.removeItem('firstname');
     this._router.navigate[('/login')];
+  }
+
+  getFirstname(){
+    return this.firstname;
   }
 }

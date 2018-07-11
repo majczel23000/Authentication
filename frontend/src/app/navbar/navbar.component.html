@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-  <span class="navbar-brand">Content Management Application</span>
+  <span class="navbar-brand">{{title}}</span>
+  <span style="color: white; font-size: 0.8rem" *ngIf="apiService.loggedIn()">Użytkownik: {{firstname}} {{lastname}}</span>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

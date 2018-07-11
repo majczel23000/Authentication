@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
 @Component({
@@ -8,9 +8,30 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(public apiService: ApiService, private _router: Router) { }
+  firstname: string;
+  lastname: string;
+  constructor(public apiService: ApiService, private _router: Router) {
 
+   }
+
+  title = "Content Management Application";
   ngOnInit() {
+    this.firstname = localStorage.getItem('firstname');
+    this.lastname = localStorage.getItem('lastname');
+    this.apiService.firstnameString$.subscribe(
+      data =>{
+        this.firstname = data;
+        if(this.firstname == '')
+          this.firstname = localStorage.getItem('firstname');
+      }
+    );
+    this.apiService.lastnameString$.subscribe(
+      data => {
+        this.lastname = data;
+        if(this.lastname == '')
+          this.lastname = localStorage.getItem('lastname');
+      }
+    )
   }
 
   navbarBrandClick(){
