@@ -49,10 +49,10 @@ export class RegisterComponent implements OnInit {
 
   validateRegisterForm(){
 
-    let firstname = document.getElementsByName('firstname')[0].value;
-    let lastname = document.getElementsByName('lastname')[0].value;
-    let email = document.getElementsByName('email')[0].value;
-    let password = document.getElementsByName('password')[0].value;
+    let firstname = (<HTMLInputElement>document.getElementsByName('firstname')[0]).value;
+    let lastname = (<HTMLInputElement>document.getElementsByName('lastname')[0]).value;
+    let email = (<HTMLInputElement>document.getElementsByName('email')[0]).value;
+    let password = (<HTMLInputElement>document.getElementsByName('password')[0]).value;
     if(firstname === '' || firstname === 'null' || firstname === null || firstname === undefined){
       this.validationElements[0].val=false;
       this.validationElements[0].message="Firstname nie może być puste";

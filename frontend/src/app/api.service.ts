@@ -26,16 +26,24 @@ export class ApiService {
   registerUser(user){
     console.log("[registerUser]");
     this.http.post('http://localhost:3000/register', user)
-    .subscribe(res => {
-      console.log(res);
-      localStorage.setItem('token', res['token']);
-      localStorage.setItem('firstname', res['firstname']);
-      localStorage.setItem('lastname', res['lastname']);
-      console.log("Uzytkownik: ", res['firstname'], res['lastname']);
-      //this.firstname = res['firstname'];
-      this.insertFirstname(res['firstname']);
-      this.insertLastname(res['lastname']);
-      this._router.navigate(['/dashboard']);
+    .subscribe(
+      res => {
+        console.log(res);
+        localStorage.setItem('token', res['token']);
+        localStorage.setItem('firstname', res['firstname']);
+        localStorage.setItem('lastname', res['lastname']);
+        console.log("Uzytkownik: ", res['firstname'], res['lastname']);
+        //this.firstname = res['firstname'];
+        this.insertFirstname(res['firstname']);
+        this.insertLastname(res['lastname']);
+        this._router.navigate(['/dashboard']);
+      },
+      err => {
+        if(err instanceof HttpErrorResponse){
+          if(err.status === 500){
+            alert("Podany mail już istnieje, proszę wpisać inny");
+          }
+        }
     })
   };
 

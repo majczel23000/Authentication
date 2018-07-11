@@ -43,26 +43,38 @@ var BRYPT_SALT_ROUNDS = 12;
 app.post('/register', (req, res) => {
     var firstname = req.body.firstname;
     var lastname = req.body.lastname;
-    var email = req.body.email;
+    var emaill = req.body.email;
     var password = req.body.password;
 
-    bcrypt.hash(password, BRYPT_SALT_ROUNDS)
-    .then(function(hashedPassword){
-        var user = new User();
-        user.firstname = firstname;
-        user.lastname = lastname;
-        user.email = email;
-        user.password = hashedPassword;
-        user.save((err, result) => {
-            if(err){
-                console.log("There is an error in adding user in database");
-                res.send({success: "Failed to add user", status: 500});
+    User.findOne({email: emaill}, (error, user) =>{
+        if(error){
+            console.log("Problem upsss");
+        } else{
+            if(!user){  //to znaczy ze mozna zalozyc
+                bcrypt.hash(password, BRYPT_SALT_ROUNDS)
+                .then(function(hashedPassword){
+                    var user = new User();
+                    user.firstname = firstname;
+                    user.lastname = lastname;
+                    user.email = emaill;
+                    user.password = hashedPassword;
+                    user.save((err, result) => {
+                        if(err){
+                            console.log("There is an error in adding user in database");
+                            res.send({success: "Failed to add user", status: 500});
+                        }
+                        let payload = { subject: result._id};
+                        let token = jwt.sign(payload, 'secretKey');
+                        res.send({token, firstname, lastname});
+                    });
+                })
+            } else{ //to znaczy ze jest juz takie email
+                res.status(500).send("Istnieje juz taki email");
             }
-            let payload = { subject: result._id};
-            let token = jwt.sign(payload, 'secretKey');
-            res.send({token, firstname, lastname});
-        });
+        }
     })
+
+    
 });
 
 app.post('/login', (req, res) => {
