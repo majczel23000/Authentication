@@ -12,6 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { InformationComponent } from './information/information.component';
+import { AuthLoginGuard } from './auth-login.guard';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { InformationComponent } from './information/information.component';
       },
       {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
+        canActivate: [AuthLoginGuard]
       },
       {
         path: '',
