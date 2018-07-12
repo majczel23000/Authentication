@@ -2,26 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from '../../node_modules/rxjs';
+import { USER } from './User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private firstname = new Subject<string>();
-  firstnameString$ = this.firstname.asObservable();
-
-  private lastname = new Subject<string>();
-  lastnameString$ = this.lastname.asObservable();
 
   constructor(private http: HttpClient, private _router: Router) { }
-
-  insertFirstname(data: string) {
-    this.firstname.next(data);
-  }
-  insertLastname(data: string) {
-    this.lastname.next(data);
-  }
 
   registerUser(user){
     console.log("[registerUser]");
@@ -32,10 +21,8 @@ export class ApiService {
         localStorage.setItem('token', res['token']);
         localStorage.setItem('firstname', res['firstname']);
         localStorage.setItem('lastname', res['lastname']);
+        localStorage.setItem('email', res['emaill']);
         console.log("Uzytkownik: ", res['firstname'], res['lastname']);
-        //this.firstname = res['firstname'];
-        this.insertFirstname(res['firstname']);
-        this.insertLastname(res['lastname']);
         this._router.navigate(['/dashboard']);
       },
       err => {
@@ -56,10 +43,11 @@ export class ApiService {
         localStorage.setItem('token', res['token']);
         localStorage.setItem('firstname', res['firstname']);
         localStorage.setItem('lastname', res['lastname']);
-        console.log("Uzytkownik: ", res['firstname'], res['lastname']);
-        //this.firstname = res['firstname'];
-        this.insertFirstname(res['firstname']);
-        this.insertLastname(res['lastname']);
+        localStorage.setItem('email', res['_email']);
+        USER['firstname'] = res['firstname'];
+        USER['lastname'] = res['lastname'];
+        USER['emial'] = res['_email'];
+        console.log("Uzytkownik: ", res['firstname'], res['lastname'], res['_email']);
         this._router.navigate(['/dashboard']);
       },
       err=>{
@@ -73,24 +61,35 @@ export class ApiService {
     })
   }
 
+  editUser(user){
+    console.log("[EditUser]");
+    this.http.put('http://localhost:3000/edit', user)
+    .subscribe(
+      res => {
+        console.log(res);
+        localStorage.setItem('firstname', res['firstname']);
+        localStorage.setItem('lastname', res['lastname']);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
   dashboardAccess(){
     console.log("[dashboardAccess] returning http get method")
     return this.http.get<any>('http://localhost:3000/dashboard');
   }
 
+  userPanelAccess(){
+    console.log("[userPanelAccess] returning http get method")
+    return this.http.get<any>('http://localhost:3000/userpanel');
+  }
+
   loggedIn(){
-    // !! - zwraca typ boolean (jest lub nie), a nie wartosc itemu token
-    // if(localStorage.getItem('token') == null){
-    //   console.log("nei ma tokenu");
-    //   return false;
-    // }
-    // else{
-    //   console.log("jest token");
-    //   return true;
-    // }
-    console.log("[loggedIn] Checking if there is token");
     return !!localStorage.getItem('token');
   }
+
   loggeddIn(){
     console.log("[LI loggedIn] Checking if there is token");
     return !!localStorage.getItem('token');
@@ -113,10 +112,6 @@ export class ApiService {
     localStorage.removeItem('firstname');
     localStorage.removeItem('lastname');
     this._router.navigate[('/login')];
-  }
-
-  getFirstname(){
-    return this.firstname;
   }
 
 }

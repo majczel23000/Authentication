@@ -65,22 +65,20 @@ app.post('/register', (req, res) => {
                         }
                         let payload = { subject: result._id};
                         let token = jwt.sign(payload, 'secretKey');
-                        res.send({token, firstname, lastname});
+                        res.send({token, firstname, lastname, emaill});
                     });
                 })
             } else{ //to znaczy ze jest juz takie email
                 res.status(500).send("Istnieje juz taki email");
             }
         }
-    })
-
-    
+    })    
 });
 
 app.post('/login', (req, res) => {
     let userData = req.body;
     
-    User.findOne({emal: userData.email}, (error, user) => {
+    User.findOne({email: userData.email}, (error, user) => {
         if(error){
             console.log("There is an error with email.", error);
         } else{
@@ -93,13 +91,41 @@ app.post('/login', (req, res) => {
                let token = jwt.sign(payload, 'secretKey');
                var firstname = user.firstname;
                var lastname = user.lastname;
-               res.status(200).send({token, firstname, lastname});
+               var _email = user.email;
+               res.status(200).send({token, firstname, lastname, _email});
            }
         }
     });
 });
 
+app.put('/edit', (req, res) =>{
+    let userData = req.body;
+    let pass = userData.password;
+    bcrypt.hash(userData.password, BRYPT_SALT_ROUNDS)
+    .then(function(hashedPassword){
+        User.findOneAndUpdate({email: userData.email},{
+            $set: {firstname: userData.firstname, lastname: userData.lastname, password: hashedPassword}
+        },
+        {
+            new: true
+        }, function(err, updatedUser){
+            if(err){
+                res.send("Error updating user");
+            } else {
+                var firstname = updatedUser.firstname;
+                var lastname = updatedUser.lastname;
+                res.status(200).send({firstname, lastname});
+            }
+        })       
+    })
+    
+});
+
 app.get('/dashboard', verifyToken, (req, res) =>{
+    res.status(200);
+})
+
+app.get('/userpanel', verifyToken, (req, res) =>{
     res.status(200);
 })
 
