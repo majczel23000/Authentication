@@ -32,7 +32,8 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
     RouterModule.forRoot([
       {
         path: 'register',
-        component: RegisterComponent
+        component: RegisterComponent,
+        canActivate: [AuthLoginGuard]
       },
       {
         path: 'login',
