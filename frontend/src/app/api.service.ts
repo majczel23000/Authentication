@@ -25,12 +25,13 @@ export class ApiService {
         localStorage.setItem('email', res['emaill']);
         console.log("Uzytkownik: ", res['firstname'], res['lastname']);
         this._router.navigate(['/dashboard']);
-        this.messageService.add('Zarejestrowano pomyslnie');
+        this.messageService.add('Zarejestrowano pomyslnie', true);
       },
       err => {
         if(err instanceof HttpErrorResponse){
           if(err.status === 500){
-            alert("Podany mail już istnieje, proszę wpisać inny");
+            //alert("Podany mail już istnieje, proszę wpisać inny");
+            this.messageService.add('Podany mail już istnieje, proszę wpisać inny', false);
           }
         }
     })
@@ -51,16 +52,16 @@ export class ApiService {
         USER['emial'] = res['_email'];
         console.log("Uzytkownik: ", res['firstname'], res['lastname'], res['_email']);
         this._router.navigate(['/dashboard']);
-        this.messageService.add('Zalogowano pomyslnie');
+        this.messageService.add('Zalogowano pomyslnie', true);
       },
       err=>{
         if(err instanceof HttpErrorResponse){
           if(err.status === 401){
             //alert("Nieprawidłowy email");
-            this.messageService.add('Nieprawidłowy email');
+            this.messageService.add('Nieprawidłowy email', false);
           } else if(err.status === 402){
            // alert("Nieprawidłowe hasło");
-            this.messageService.add('Nieprawidłowe hasło');
+            this.messageService.add('Nieprawidłowe hasło', false);
           }
         }
     })
@@ -74,9 +75,11 @@ export class ApiService {
         console.log(res);
         localStorage.setItem('firstname', res['firstname']);
         localStorage.setItem('lastname', res['lastname']);
+        this.messageService.add('Zedytowano dane', true);
       },
       err => {
         console.log(err);
+        this.messageService.add('Napotkano błąd w trakcie edycji', false);
       }
     );
   }
@@ -117,6 +120,7 @@ export class ApiService {
     localStorage.removeItem('firstname');
     localStorage.removeItem('lastname');
     this._router.navigate[('/login')];
+    this.messageService.add('Pomyslnie wylogowano', true);
   }
 
 }

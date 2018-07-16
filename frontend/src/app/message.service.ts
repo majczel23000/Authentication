@@ -6,17 +6,25 @@ import { Injectable } from '@angular/core';
 export class MessageService {
 
   messages: string[] = [];
-
-  add(message: string) {
+  success: boolean = false;
+  add(message: string, change: boolean) {
+    this.setSuccess(change);
+    let msg = document.getElementById("message");
+    if(msg !== null)
+      msg.style.display="block";
     this.messages[0] = message;
-    console.log(this.messages[0]);
     setTimeout(function(){
       let msg = document.getElementById("message");
       msg.style.display="none";
       this.messages = [];
     },3000);
   }
-  clear() {
-    this.messages = [];
+
+  setSuccess(change: boolean){
+    this.success = change;
+  }
+
+  getSuccess(){
+    return this.success;
   }
 }
