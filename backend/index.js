@@ -101,10 +101,27 @@ app.post('/login', (req, res) => {
 app.put('/edit', (req, res) =>{
     let userData = req.body;
     let pass = userData.password;
-    bcrypt.hash(userData.password, BRYPT_SALT_ROUNDS)
-    .then(function(hashedPassword){
-        User.findOneAndUpdate({email: userData.email},{
-            $set: {firstname: userData.firstname, lastname: userData.lastname, password: hashedPassword}
+    if(pass !== ''){
+        bcrypt.hash(userData.password, BRYPT_SALT_ROUNDS)
+        .then(function(hashedPassword){
+            User.findOneAndUpdate({email: userData.email},{
+                $set: {firstname: userData.firstname, lastname: userData.lastname, password: hashedPassword}
+            },
+            {
+                new: true
+            }, function(err, updatedUser){
+                if(err){
+                    res.send("Error updating user");
+                } else {
+                    var firstname = updatedUser.firstname;
+                    var lastname = updatedUser.lastname;
+                    res.status(200).send({firstname, lastname});
+                }
+            })       
+        })  
+    } else {
+        User.findOneAndUpdate({email: userData.email}, {
+            $set: {firstname: userData.firstname, lastname: userData.lastname}
         },
         {
             new: true
@@ -112,16 +129,16 @@ app.put('/edit', (req, res) =>{
             if(err){
                 res.send("Error updating user");
             } else {
-                var firstname = updatedUser.firstname;
-                var lastname = updatedUser.lastname;
+                let firstname = updatedUser.firstname;
+                let lastname = updatedUser.lastname;
                 res.status(200).send({firstname, lastname});
             }
-        })       
-    })
-    
+        })
+    }
+        
 });
 
-app.get('/dashboard', verifyToken, (req, res) =>{
+app.get('/verify', verifyToken, (req, res) =>{
     res.status(200);
 })
 

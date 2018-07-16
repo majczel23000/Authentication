@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from '../../node_modules/rxjs';
 import { USER } from './User';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { USER } from './User';
 export class ApiService {
 
 
-  constructor(private http: HttpClient, private _router: Router) { }
+  constructor(private http: HttpClient, private _router: Router, private messageService: MessageService) { }
 
   registerUser(user){
     console.log("[registerUser]");
@@ -24,6 +25,7 @@ export class ApiService {
         localStorage.setItem('email', res['emaill']);
         console.log("Uzytkownik: ", res['firstname'], res['lastname']);
         this._router.navigate(['/dashboard']);
+        this.messageService.add('Zarejestrowano pomyslnie');
       },
       err => {
         if(err instanceof HttpErrorResponse){
@@ -49,13 +51,16 @@ export class ApiService {
         USER['emial'] = res['_email'];
         console.log("Uzytkownik: ", res['firstname'], res['lastname'], res['_email']);
         this._router.navigate(['/dashboard']);
+        this.messageService.add('Zalogowano pomyslnie');
       },
       err=>{
         if(err instanceof HttpErrorResponse){
           if(err.status === 401){
-            alert("Nieprawidłowy email");
+            //alert("Nieprawidłowy email");
+            this.messageService.add('Nieprawidłowy email');
           } else if(err.status === 402){
-            alert("Nieprawidłowe hasło");
+           // alert("Nieprawidłowe hasło");
+            this.messageService.add('Nieprawidłowe hasło');
           }
         }
     })
@@ -76,9 +81,9 @@ export class ApiService {
     );
   }
 
-  dashboardAccess(){
+  loggedUserAccess(){
     console.log("[dashboardAccess] returning http get method")
-    return this.http.get<any>('http://localhost:3000/dashboard');
+    return this.http.get<any>('http://localhost:3000/verify');
   }
 
   userPanelAccess(){

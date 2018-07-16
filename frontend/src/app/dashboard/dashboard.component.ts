@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.apiService.dashboardAccess()
+    this.apiService.loggedUserAccess()
     .subscribe(
       res => console.log("Access to dashboard"),
       err =>{
@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
             this.router.navigate(['/login']);
           }
           if(err.status === 500){
+            console.log('Unauthorized access!!!');
             this.apiService.deleteToken500Error();
             this.router.navigate(['/login']);
           }

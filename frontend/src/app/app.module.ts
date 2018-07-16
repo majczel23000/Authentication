@@ -14,6 +14,7 @@ import { TokenInterceptorService } from './token-interceptor.service';
 import { InformationComponent } from './information/information.component';
 import { AuthLoginGuard } from './auth-login.guard';
 import { UserPanelComponent } from './user-panel/user-panel.component';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
     LoginComponent,
     DashboardComponent,
     InformationComponent,
-    UserPanelComponent
+    UserPanelComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
