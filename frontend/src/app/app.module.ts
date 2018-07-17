@@ -15,6 +15,7 @@ import { InformationComponent } from './information/information.component';
 import { AuthLoginGuard } from './auth-login.guard';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { MessagesComponent } from './messages/messages.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MessagesComponent } from './messages/messages.component';
     DashboardComponent,
     InformationComponent,
     UserPanelComponent,
-    MessagesComponent
+    MessagesComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +61,11 @@ import { MessagesComponent } from './messages/messages.component';
       {
         path: 'userpanel',
         component: UserPanelComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
         canActivate: [AuthGuard]
       }
     ])

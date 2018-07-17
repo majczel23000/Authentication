@@ -123,4 +123,9 @@ export class ApiService {
     this.messageService.add('Pomyslnie wylogowano', true);
   }
 
+  getUsers(){
+    console.log("[getUsers()]");
+    return this.http.get('http://localhost:3000/users');
+  }
+
 }

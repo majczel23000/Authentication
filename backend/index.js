@@ -149,3 +149,13 @@ app.get('/userpanel', verifyToken, (req, res) =>{
 app.listen(app.get('port'), function(err, response){
     console.log("Server is running on port:", app.get('port'));
 });
+
+app.get('/users', verifyToken, (req, res) =>{
+    User.find({}, function(err, users){
+        if(err){
+            res.send('something went wrong');
+            next();
+        }
+        res.json(users);
+    });
+});
