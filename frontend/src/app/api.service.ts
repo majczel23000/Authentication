@@ -47,9 +47,11 @@ export class ApiService {
         localStorage.setItem('firstname', res['firstname']);
         localStorage.setItem('lastname', res['lastname']);
         localStorage.setItem('email', res['_email']);
+        localStorage.setItem('roles', res['roles']);
         USER['firstname'] = res['firstname'];
         USER['lastname'] = res['lastname'];
-        USER['emial'] = res['_email'];
+        USER['email'] = res['_email'];
+       // USER['roles'].push(res['roles']);
         console.log("Uzytkownik: ", res['firstname'], res['lastname'], res['_email']);
         this._router.navigate(['/dashboard']);
         this.messageService.add('Zalogowano pomyslnie', true);
@@ -103,6 +105,17 @@ export class ApiService {
     return !!localStorage.getItem('token');
   }
 
+  usersAccess(){
+    if(localStorage.getItem('roles') == 'USERS')
+      return true;
+    else
+      return false;
+  }
+
+  getRoles(){
+    return localStorage.getItem('roles');
+  }
+
   loggeddIn(){
     console.log("[LI loggedIn] Checking if there is token");
     return !!localStorage.getItem('token');
@@ -124,6 +137,8 @@ export class ApiService {
     localStorage.removeItem('token');
     localStorage.removeItem('firstname');
     localStorage.removeItem('lastname');
+    localStorage.removeItem('roles');
+    localStorage.removeItem('email');
     this._router.navigate[('/login')];
     this.messageService.add('Pomyslnie wylogowano', true);
   }

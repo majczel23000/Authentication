@@ -1,5 +1,6 @@
 export const USER = [{
   firstname: '',
   lastname: '',
-  email: ''
+  email: '',
+  //roles: []
 }]

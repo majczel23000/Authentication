@@ -92,7 +92,8 @@ app.post('/login', (req, res) => {
                var firstname = user.firstname;
                var lastname = user.lastname;
                var _email = user.email;
-               res.status(200).send({token, firstname, lastname, _email});
+               var roles = user.roles;
+               res.status(200).send({token, firstname, lastname, _email, roles});
            }
         }
     });
