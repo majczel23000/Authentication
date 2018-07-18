@@ -84,6 +84,11 @@ export class ApiService {
     );
   }
 
+  editUserFromUsers(user){
+    console.log("[EditUser]");
+    return this.http.put('http://localhost:3000/edit', user);
+  }
+
   loggedUserAccess(){
     console.log("[dashboardAccess] returning http get method")
     return this.http.get<any>('http://localhost:3000/verify');
