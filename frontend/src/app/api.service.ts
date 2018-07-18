@@ -47,7 +47,7 @@ export class ApiService {
         localStorage.setItem('firstname', res['firstname']);
         localStorage.setItem('lastname', res['lastname']);
         localStorage.setItem('email', res['_email']);
-        localStorage.setItem('roles', res['roles']);
+        localStorage.setItem('roles', JSON.stringify(res['roles']));
         USER['firstname'] = res['firstname'];
         USER['lastname'] = res['lastname'];
         USER['email'] = res['_email'];
@@ -106,14 +106,19 @@ export class ApiService {
   }
 
   usersAccess(){
-    if(localStorage.getItem('roles') == 'USERS')
-      return true;
-    else
+    let roles = JSON.parse(localStorage.getItem('roles'));
+    if(roles !== null){
+      for(let i = 0; i < roles.length; i++){
+        if(roles[i] === 'USERS')
+          return true;
+      }
       return false;
+    }
+    return false;
   }
 
   getRoles(){
-    return localStorage.getItem('roles');
+    return JSON.parse(localStorage.getItem('roles'));
   }
 
   loggeddIn(){
