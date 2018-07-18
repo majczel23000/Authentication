@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { MessageService } from '../message.service';
-import { last } from '../../../node_modules/@angular/router/src/utils/collection';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -15,7 +16,8 @@ export class UsersComponent implements OnInit {
   editingUserFirstname;
   editingUserLastname;
 
-  constructor(private apiService: ApiService, private messageService: MessageService) { }
+  constructor(private apiService: ApiService, private messageService: MessageService,
+              private router: Router) { }
 
   ngAfterViewInit(){
     this.apiService.getUsers().subscribe(
@@ -40,6 +42,7 @@ export class UsersComponent implements OnInit {
     email: ''
   };
   removeUser(e){
+    document.getElementById('editForm').style.display="none";
     let decision = confirm("Na pewno?");
     if(decision){
       let help = e.target.parentNode.parentNode.children;
@@ -96,6 +99,10 @@ export class UsersComponent implements OnInit {
       }
     );
 
+  }
+
+  goToRegisterComponent(){
+    this.router.navigate(['/register']);
   }
 
 }

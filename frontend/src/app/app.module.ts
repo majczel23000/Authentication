@@ -38,7 +38,7 @@ import { UsersComponent } from './users/users.component';
       {
         path: 'register',
         component: RegisterComponent,
-        canActivate: [AuthLoginGuard]
+        canActivate: [RolesGuard]
       },
       {
         path: 'login',

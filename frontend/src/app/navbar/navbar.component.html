@@ -6,25 +6,25 @@
 
   <div class="collapse navbar-collapse text-right" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item ">
+      <li class="nav-item text-center">
         <a class="nav-link" *ngIf="apiService.loggedIn()" routerLink="/dashboard">Dashboard</a>
       </li>
-      <li class="nav-item mr-2">
+      <!-- <li class="nav-item mr-2 text-center">
           <a class="nav-link bg-primary text-white" *ngIf="!apiService.loggedIn()" routerLink="/register">Register</a>
-      </li>
-      <li class="nav-item mr-2">
+      </li> -->
+      <li class="nav-item mr-2 text-center">
         <a class="nav-link bg-success text-white" *ngIf="!apiService.loggedIn()" routerLink="/login">Login</a>
       </li>
-      <li class="nav-item mr-2" *ngIf="apiService.loggedIn()">
+      <li class="nav-item mr-2 text-center" *ngIf="apiService.loggedIn()">
         <a class="nav-link" routerLink="/userpanel">User Panel</a>
       </li>
-      <li class="nav-item mr-2" *ngIf="apiService.usersAccess()" (click)="apiService.getUsers()">
+      <li class="nav-item mr-2 text-center" *ngIf="apiService.usersAccess()" (click)="apiService.getUsers()">
         <a class="nav-link" routerLink="/users">Users</a>
       </li>
-      <li class="nav-item mr-2">
+      <li class="nav-item mr-2 text-center">
         <a class="nav-link bg-secondary text-white" *ngIf="apiService.loggedIn()" routerLink="/login" (click)="apiService.logoutUser()">Logout</a>
       </li>
-      <li class="nav-item mr-2">
+      <li class="nav-item mr-2 text-center">
         <a class="nav-link bg-info text-white" routerLink="/information">Information</a>
       </li>
     </ul>

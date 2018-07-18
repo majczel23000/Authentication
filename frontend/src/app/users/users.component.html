@@ -22,6 +22,8 @@
   </tbody>
 </table>
 
+<button class="btn btn-primary" (click)="goToRegisterComponent()">Register new user</button>
+
 <form style="display: none" id="editForm" class="mt-5" #userData="ngForm" (ngSubmit)="editUserData(userData.value)">
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">Firstname</label>

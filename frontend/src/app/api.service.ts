@@ -19,18 +19,13 @@ export class ApiService {
     .subscribe(
       res => {
         console.log(res);
-        localStorage.setItem('token', res['token']);
-        localStorage.setItem('firstname', res['firstname']);
-        localStorage.setItem('lastname', res['lastname']);
-        localStorage.setItem('email', res['emaill']);
-        console.log("Uzytkownik: ", res['firstname'], res['lastname']);
-        this._router.navigate(['/dashboard']);
+        console.log("Zarejestrowano użytkownika: ", res['firstname'], res['lastname']);
+        this._router.navigate(['/users']);
         this.messageService.add('Zarejestrowano pomyslnie', true);
       },
       err => {
         if(err instanceof HttpErrorResponse){
           if(err.status === 500){
-            //alert("Podany mail już istnieje, proszę wpisać inny");
             this.messageService.add('Podany mail już istnieje, proszę wpisać inny', false);
           }
         }
