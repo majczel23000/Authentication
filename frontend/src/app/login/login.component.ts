@@ -13,8 +13,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-
   loginUser(user){
+    // user - dane wpisane w formularzu (email, password)
     this.apiService.loginUser(user);
   }
 

@@ -15,8 +15,8 @@
       <td>{{user.email}}</td>
       <td *ngIf="getLoggedUserEmail() !== user.email"><button class="btn btn-edit"  (click)="editUser($event)">Edit</button></td>
       <td *ngIf="getLoggedUserEmail() !== user.email" ><button class="btn btn-danger" (click)="removeUser($event)">Remove</button></td>
-      <td class="alert-success"*ngIf="getLoggedUserEmail() == user.email">To Ty</td>
-      <td class="alert-success"*ngIf="getLoggedUserEmail() == user.email"></td>
+      <td class="alert-success" *ngIf="getLoggedUserEmail() == user.email">To Ty</td>
+      <td class="alert-success" *ngIf="getLoggedUserEmail() == user.email"></td>
     </tr>
 
   </tbody>

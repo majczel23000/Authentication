@@ -10,6 +10,7 @@ import { USER } from '../User';
 })
 export class UserPanelComponent implements OnInit {
 
+  // pobieram z localStorage dane uzytkownika
   firstname = localStorage.getItem('firstname');
   lastname = localStorage.getItem('lastname');
   email = localStorage.getItem('email');
@@ -18,16 +19,17 @@ export class UserPanelComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    // sprawdzam możliwosć dostępu do tego komponentu
     this.apiService.loggedUserAccess()
     .subscribe(
-      res => console.log("Access to panel"),
+      res => console.log("Access to panel"),  // mam dostęp
       err =>{
         if(err instanceof HttpErrorResponse){
           if(err.status === 200){
-            console.log("userPanel okej");
-            this.router.navigate(['/login']);
+            this.router.navigate(['/login']); //przekierowanie do login
           }
           if(err.status === 500){
+            // brak dostępu, kasowanie localStorage, przekierowanie do login
             this.apiService.deleteToken500Error();
             this.router.navigate(['/login']);
           }
@@ -36,13 +38,18 @@ export class UserPanelComponent implements OnInit {
     )
   }
 
+
   ngAfterViewInit(){
+    // po odpaleniu widoku pobieram dane z localStorage
     this.firstname = localStorage.getItem('firstname');
     this.lastname = localStorage.getItem('lastname');
     this.email = localStorage.getItem('email');
   }
 
+  // zmienna okreslająca widocznosć formularza edycji danych użytkownika
   private formDisplay = false;
+
+  // pokazanie/ukrycie formularza
   showHideForm(){
     if(!this.formDisplay){
       document.getElementById("editForm").style.display="block";
@@ -53,15 +60,16 @@ export class UserPanelComponent implements OnInit {
     }
   }
 
+  // edytowanie danych użytkownika, user - dane wpisane w formularzu
   editUserData(user){
-    if(user.firstname === '')
+    if(user.firstname === '') // firstname puste - pobieramy aktualną wartosć z localStorage
       user.firstname = localStorage.getItem('firstname');
-    if(user.lastname === '')
+    if(user.lastname === '')  // lastname puste - pobieramy aktualną wartosć z localStorage
       user.lastname = localStorage.getItem('lastname');
     user.email = this.email = localStorage.getItem('email');
     this.firstname = user.firstname;
     this.lastname = user.lastname;
-    //console.log(user);
+    // użycie serwisu
     this.apiService.editUser(user);
   }
 }

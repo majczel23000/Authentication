@@ -15,15 +15,16 @@ export class AuthLoginGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean{
-    if(this._apiService.loggedIn()){
-      console.log("[authLogin] There is token, you can't go to login page when you are logged, please log out");
-      this._router.navigate(['/dashboard']);
-      console.log(this.previous);
-      return false;
-    } else{
-      console.log("[authLogin] There is no token, you can do this");
-      //this._router.navigate(['/login']);
-      return true;
-    }
+      // jak jestesmy zalogowani, to nie mozemy przejsc do logowania
+      if(this._apiService.loggedIn()){
+        console.log("[authLogin] There is token, you can't go to login page when you are logged, please log out");
+        this._router.navigate(['/dashboard']);
+        console.log(this.previous);
+        return false;
+      } else{ // jak nie jestesmy, to mozemy przejsc do login
+        console.log("[authLogin] There is no token, you can do this");
+        //this._router.navigate(['/login']);
+        return true;
+      }
   };
 }

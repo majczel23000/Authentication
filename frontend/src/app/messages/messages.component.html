@@ -1,3 +1,4 @@
-<div *ngIf="messageService.messages.length">
+<div *ngIf="messageService.messages.length"> <!-- jesli jest jakas wiadomosc to sie pokaze, bo dlugosc wtedy wieksza niz 0 -->
     <div id="message" [ngClass]="{'alert-danger' : !messageService.getSuccess(), 'alert-success' :messageService.getSuccess() }" class="alert mt-5" *ngFor='let message of messageService.messages'> {{message}} </div>
+    <!-- klasa nadana zależnie od aktywnej wartosci parametru success w serwisie messages -->
 </div>
