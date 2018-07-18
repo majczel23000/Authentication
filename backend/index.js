@@ -98,6 +98,16 @@ app.post('/login', (req, res) => {
     });
 });
 
+app.delete('/removeuser/:email', (req, res) => {
+    User.findOneAndRemove({email: req.params.email}, function(err, user){
+        if(err){
+            res.send("Error deleting user");
+        } else {
+            res.json(user);
+        }
+    })
+});
+
 app.put('/edit', (req, res) =>{
     let userData = req.body;
     let pass = userData.password;

@@ -128,4 +128,12 @@ export class ApiService {
     return this.http.get('http://localhost:3000/users');
   }
 
+  removeUser(email){
+    console.log("[removeUser()]");
+    return this.http.delete("http://localhost:3000/removeuser/"+email);
+  }
+
+  getLoggedUserEmail(){
+    return localStorage.getItem('email');
+  }
 }

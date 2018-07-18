@@ -8,11 +8,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of users; let idx = index ">
-      <th scope="row">{{idx + 1}}</th>
+    <tr *ngFor="let user of users; let i = index ">
+      <th scope="row">{{i + 1}}</th>
       <td>{{user.firstname}}</td>
       <td>{{user.lastname}}</td>
       <td>{{user.email}}</td>
+      <td *ngIf="getLoggedUserEmail() !== user.email"><button class="btn btn-edit"  (click)="editUser($event)">Edit</button></td>
+      <td *ngIf="getLoggedUserEmail() !== user.email" ><button class="btn btn-danger" (click)="removeUser($event)">Remove</button></td>
+      <td class="alert-success"*ngIf="getLoggedUserEmail() == user.email">To Ty</td>
+      <td class="alert-success"*ngIf="getLoggedUserEmail() == user.email"></td>
     </tr>
 
   </tbody>

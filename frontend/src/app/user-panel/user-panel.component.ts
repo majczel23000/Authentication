@@ -61,6 +61,7 @@ export class UserPanelComponent implements OnInit {
     user.email = this.email = localStorage.getItem('email');
     this.firstname = user.firstname;
     this.lastname = user.lastname;
+    //console.log(user);
     this.apiService.editUser(user);
   }
 }
